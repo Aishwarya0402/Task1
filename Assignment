@@ -1,0 +1,105 @@
+Login Page:
+
+package Win;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.PageFactory;
+
+public class login_page
+{
+	
+	          @FindBy (xpath=("//input[@id='userid']")) private WebElement UN;   
+	          @FindBy (xpath=("//input[@id='password']"))private WebElement PWD; 
+	          @FindBy (xpath=("//button[text()='Login ']"))private WebElement loginBtn;
+
+	      public login_page(WebDriver driver)
+	      {
+	    	  PageFactory.initElements(driver, this);
+	      }
+	      public void Enterusername()
+	      {
+	    	 UN.sendKeys("Aishwarya"); 
+	      }
+	      public void Enterpassword()
+	      {
+	    	  PWD.sendKeys("Aishu@123");
+	      }
+	      public void clickloginbtn()
+	      {
+	    	  loginBtn.click();
+	      }
+
+	}
+}
+
+Home Page:
+
+package Win;
+
+import org.openqa.selenium.WebElement;
+
+public class Homepage 
+{
+	@FindBy (xpath=("//th [@id='amount']")) private WebElement Amount;
+
+	public void Amount()
+			{
+				String ExpectedAmount=("Sorted");
+				
+				String ActualAmount=Sorted.getText();
+				
+				if(ExpectedUserID.equals(ActualUserID))
+				{
+					System.out.println("Pass");
+				}
+				else
+				{
+					System.out.println("Fail");
+				}
+
+}
+}
+
+
+Test Class:
+
+
+package Win;
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Testclass         
+	{
+		public static void main(String[] args) throws InterruptedException 
+		{
+			System.setProperty("webdriver.chrome.driver","C:\\Users\\hp\\Downloads\\chromedriver_win32\\chromedriver.exe");
+			  
+		    //Create object of chromedriver class and provide reference of  Webdriver interface             
+		    WebDriver driver=new ChromeDriver();
+		  
+		   driver.get("https://sakshingp.github.io/assignment/home.html");
+		   driver.manage().window().maximize();
+		   
+		   driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		   
+		   //create object of POM class1
+		   login_page login=new login_page(driver);
+		   login.Enterusername();
+		   login.Enterpassword();
+		   login.clickloginbtn();
+		  
+		   //create object of POM class3
+		   Homepage homepage=new Homepage(driver);
+		   homepage.Amount();
+		   
+		   
+		   Thread.sleep(2000);
+		   driver.close();
+		}
+
+}
+
